@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>DATEPICKER</title>
+    <link rel="stylesheet" href="../../jquery/jquery-ui.css" type="text/css">
+    <script src="../../jquery/jquery-3.4.1.min.js"></script>
+    <script src="../../jquery/jquery-ui.js"></script>
+</head>
+
+
+<body>
+
+    <p>Datum odlaska: <input type="text" id="datum_od"> </p>
+    <br>
+
+    <p>Datum povratka: <input type="text" id="datum_do" onsubmit="prov_dat()"> </p>
+    <br>
+
+    <input type="button" value=" Broj dana odmora " id="btn">
+    <br>
+    <br>
+    <div id='datumje'>  </div>
+
+     <script>
+         
+    $(function () {
+        $("#datum_od").datepicker({      
+           'dateFormat':'dd/mm/yy',
+           'changeMonth': true,
+           'changeYear': true,
+           'numberOfMonths': 1,               
+           'showAnim': 'clip',
+          'minDate': new Date(),
+
+            onSelect: function(selectedDate) {
+                //$("#cal4").datepicker("setDate", selectedDate);
+                var date = $(this).datepicker("getDate"); 
+                date.setDate(date.getDate() + 1);
+                $("#datum_do").datepicker("setDate", date);
+                $("#datum_do").datepicker("option", "minDate", selectedDate);
+                //$("#datum_do").datepicker("option", "maxDate", date);
+            }
+        });
+
+
+          $("#datum_do").datepicker({
+           'dateFormat':'dd/mm/yy',      
+           changeMonth: true,
+           changeYear: true,
+           'numberOfMonths': 1,               
+           'showAnim': 'clip',
+          })  
+
+    });         
+         
+/*         
+      // datepicker komponenta
+         
+          $(document).ready(function(){
+            
+           $('#date_odl').datepicker({
+               'dateFormat':'dd/mm/yy',
+               'minDate': new Date(),
+               'changeMonth': true,
+               'changeYear': true,
+               'numberOfMonths': 1,               
+               'showAnim': 'clip',
+               
+           });
+        });
+
+         
+          $(document).ready(function(){
+            
+           $('#date_povr').datepicker({
+               'dateFormat':'dd/mm/yy',
+               'minDate': donji_dat1,
+               'changeMonth': true,
+               'changeYear': true,
+               'numberOfMonths': 1,               
+               'showAnim': 'clip',
+               
+           });
+        });
+         
+ */        
+         $('#btn').click(function(){
+//            var dat1=$('#datum_od').val();  // 1 nacin da se pokupi datum
+//            var dat2=$('#datum_do').val();  // 1 nacin da se pokupi datum
+//             var dat1=$('#datum_od').val()
+//             var dat2=$('#datum_do').val()
+//            var dat1=$('#datepicker').datepicker().val();  // 2 nacin
+            var dat1=$('#datum_od').datepicker('getDate');  // 3 nacin najopstiji
+            var dat2=$('#datum_do').datepicker('getDate');  // 3 nacin najopstiji
+/*
+             var dan=dat1.getDate();
+             var mes=dat1.getMonth()+1;
+             var god=dat1.getFullYear();
+*/             
+               var diff ;
+               var jedan_dan=24 * 60 * 60 * 1000; 
+             
+               console.log(dat2);
+               console.log(dat1);
+             
+               diff = Math.round(Math.abs((dat2.getTime() - dat1.getTime()) / (jedan_dan)));
+
+                console.log(diff);
+                //console.log(days);
+                //days = diff / 1000 / 60 / 60 / 24;
+
+
+                if (diff == NaN) {
+                    $('#datumje').text(0);
+                } else {
+                    $('#datumje').text(diff);
+                }
+             
+//             $('#datumje').html(dat2-dat1+"-dana");
+//             $('#datumje').html(dan+"*"+mes+"*"+god);
+         });
+
+         
+         function prov_dat(){
+           return true; 
+         };
+         
+    </script>
+</body>
+
+</html>
